@@ -56,16 +56,8 @@ if MONGODB_URI:
     # Ensure certifi is used for SSL
     os.environ['SSL_CERT_FILE'] = certifi.where()
     
-    # Set default auto field before apps are loaded
-    DEFAULT_AUTO_FIELD = 'django_mongodb_backend.fields.ObjectIdAutoField'
-    
-    # Patch built-in apps to use ObjectIdAutoField
-    from django.contrib.admin.apps import AdminConfig
-    from django.contrib.auth.apps import AuthConfig
-    from django.contrib.contenttypes.apps import ContentTypesConfig
-    AdminConfig.default_auto_field = DEFAULT_AUTO_FIELD
-    AuthConfig.default_auto_field = DEFAULT_AUTO_FIELD
-    ContentTypesConfig.default_auto_field = DEFAULT_AUTO_FIELD
+    # Use standard AutoField which is more compatible with Django 6.0's hashing
+    DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 else:
     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
