@@ -56,8 +56,25 @@ if MONGODB_URI:
     # Ensure certifi is used for SSL
     os.environ['SSL_CERT_FILE'] = certifi.where()
     
-    # Use standard AutoField which is more compatible with Django 6.0's hashing
-    DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+    # MongoDB specialized field
+    DEFAULT_AUTO_FIELD = 'django_mongodb_backend.fields.ObjectIdAutoField'
+    
+    # PATCH: Fix "unhashable" error in Django 6.0 + MongoDB
+    import django.db.models.base
+    _old_hash = django.db.models.base.Model.__hash__
+    def _new_hash(self):
+        if self.pk is None:
+            return id(self)
+        return _old_hash(self)
+    django.db.models.base.Model.__hash__ = _new_hash
+
+    # Patch built-in apps to use ObjectIdAutoField
+    from django.contrib.admin.apps import AdminConfig
+    from django.contrib.auth.apps import AuthConfig
+    from django.contrib.contenttypes.apps import ContentTypesConfig
+    AdminConfig.default_auto_field = DEFAULT_AUTO_FIELD
+    AuthConfig.default_auto_field = DEFAULT_AUTO_FIELD
+    ContentTypesConfig.default_auto_field = DEFAULT_AUTO_FIELD
 else:
     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
