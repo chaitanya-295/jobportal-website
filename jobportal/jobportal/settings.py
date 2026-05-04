@@ -106,12 +106,17 @@ DATABASES = {
 # Support for MongoDB via environment variable
 MONGODB_URI = os.getenv("MONGODB_URI")
 if MONGODB_URI:
+    # Ensure certifi is used for SSL
+    os.environ['SSL_CERT_FILE'] = certifi.where()
+    
     DATABASES['default'] = {
         'ENGINE': 'django_mongodb_backend',
         'HOST': MONGODB_URI,
         'NAME': os.getenv("MONGODB_NAME", "jobportal_db"),
         'OPTIONS': {
             'tlsCAFile': certifi.where(),
+            'serverSelectionTimeoutMS': 5000,
+            'connectTimeoutMS': 10000,
         }
     }
     DEFAULT_AUTO_FIELD = 'django_mongodb_backend.fields.ObjectIdAutoField'
