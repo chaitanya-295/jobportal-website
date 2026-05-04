@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Revise Job Posting{% endblock %}
+
+{% block content %}
+
+<section style="padding-top: 80px;">
+    <div class="container py-3">
+        <h2 class="text-center font-weight-bold mb-5 text-primary">Modify Opportunity</h2>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div class="card border-0 shadow-lg p-5 bg-white rounded-xl">
+                    <form method="POST" enctype="multipart/form-data" class="needs-validation">
+                        {% csrf_token %}
+                        
+                        <div class="row g-4">
+                            <!-- CORE DETAILS -->
+                            <div class="col-md-12">
+                                <h5 class="font-weight-bold mb-3 border-bottom pb-2 text-dark"><i class="fa fa-info-circle mr-2 text-primary"></i> Basic Details</h5>
+                            </div>
+                            
+                            <div class="col-md-12 mb-3">
+                                <label class="font-weight-bold">Job Title / Designation</label>
+                                <input type="text" name="jobtitle" value="{{job.title}}" class="form-control p-3 border rounded shadow-sm" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="font-weight-bold">Posting Start Date</label>
+                                <input type="date" name="startdate" value="{{job.start_date|date:'Y-m-d'}}" class="form-control p-3 border rounded shadow-sm" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="font-weight-bold">Application Deadline</label>
+                                <input type="date" name="enddate" value="{{job.end_date|date:'Y-m-d'}}" class="form-control p-3 border rounded shadow-sm" required>
+                            </div>
+
+                            <!-- REQUIREMENTS -->
+                            <div class="col-md-12 mt-4">
+                                <h5 class="font-weight-bold mb-3 border-bottom pb-2 text-dark"><i class="fa fa-layer-group mr-2 text-primary"></i> Requirements & Compensation</h5>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="font-weight-bold">Annual Salary (Package)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-right-0">$</span>
+                                    <input type="number" name="salary" value="{{job.salary|floatformat:0}}" class="form-control p-3 border rounded-right shadow-sm" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="font-weight-bold">Update Brand Graphic</label>
+                                <input type="file" name="logo" class="form-control p-3 border rounded shadow-sm">
+                                <small class="text-muted">Currently: {{job.image.name}}</small>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="font-weight-bold">Experience Needed</label>
+                                <input type="text" name="experience" value="{{job.experience}}" class="form-control p-3 border rounded shadow-sm" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="font-weight-bold">Work Location</label>
+                                <input type="text" name="location" value="{{job.location}}" class="form-control p-3 border rounded shadow-sm" required>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label class="font-weight-bold">Key Skills (Comma separated)</label>
+                                <input type="text" name="skills" value="{{job.skills}}" class="form-control p-3 border rounded shadow-sm" required>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label class="font-weight-bold">Comprehensive Job Description</label>
+                                <textarea name="description" class="form-control p-3 border rounded shadow-sm" rows="6" required>{{job.description}}</textarea>
+                            </div>
+
+                            <div class="text-center d-grid mt-4">
+                                <button type="submit" class="btn btn-warning btn-lg rounded-pill shadow-lg font-weight-bold py-3 text-dark">
+                                    <i class="fa fa-sync-alt mr-2"></i> Push Updates
+                                </button>
+                                <a href="{% url 'job_list' %}" class="btn btn-link text-muted mt-2">Discard & Back</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if error == "no" %}
+<script>
+    alert("Listing successfully modified.");
+    window.location = "{% url 'job_list' %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert("Modification Failure: Something went wrong. Check inputs.");
+</script>
+{% endif %}
+
+<style>
+    .rounded-xl { border-radius: 2rem !important; }
+    .input-group-text { border-radius: 0.5rem 0 0 0.5rem; }
+    .form-control { border-radius: 0.5rem !important; }
+    .rounded-right { border-radius: 0 0.5rem 0.5rem 0 !important; }
+</style>
+
+{% endblock %}

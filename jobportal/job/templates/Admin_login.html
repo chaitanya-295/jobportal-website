@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Login | HireUp{% endblock %}
+
+{% block content %}
+<div class="login-page">
+    <div class="login-card">
+
+        <h2>Admin Login</h2>
+        <p class="text-muted text-center mb-3">
+            Access HireUp Admin Panel
+        </p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label>Username</label>
+            <input type="text" name="username" class="form-control mt-2" placeholder="Admin username" required>
+
+            <label>Password</label>
+            <input type="password" name="password" class="form-control mt-2" placeholder="Password" required>
+
+            <input type="submit" class="btn btn-primary mt-4 w-100" value="Login as Admin">
+        </form>
+
+    </div>
+</div>
+{% if error == "no" %}
+<script>
+  alert("Login Successful!");
+  window.location = "{% url 'admin_home' %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+  alert("Invalid Login Credentials, Please try again.");
+</script>
+{% endif %}
+
+
+{% endblock %}

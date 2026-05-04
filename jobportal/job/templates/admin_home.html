@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<section style="padding-top: 80px;">
+    <div class="container py-3">
+        <h1 class="display-4 font-weight-bold text-dark mb-5 border-bottom pb-4"><i
+                class="fa fa-shield-alt text-primary mr-3"></i> Admin Control Center</h1>
+
+        <!-- DASHBOARD STATS -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-4 col-lg-2 mb-4">
+                <div class="card border-0 shadow-sm p-3 text-center bg-primary text-white rounded-lg">
+                    <h2 class="font-weight-bold mb-0">{{user_count}}</h2>
+                    <p class="mb-0 small">Students</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2 mb-4">
+                <div class="card border-0 shadow-sm p-3 text-center bg-success text-white rounded-lg">
+                    <h2 class="font-weight-bold mb-0">{{recruiter_count}}</h2>
+                    <p class="mb-0 small">Recruiters</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2 mb-4">
+                <div class="card border-0 shadow-sm p-3 text-center bg-warning text-dark rounded-lg">
+                    <h2 class="font-weight-bold mb-0">{{pending_recruiter}}</h2>
+                    <p class="mb-0 small">Pending</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="card border-0 shadow-sm p-3 text-center bg-info text-white rounded-lg">
+                    <h2 class="font-weight-bold mb-0">{{job_count}}</h2>
+                    <p class="mb-0 small">Total Jobs</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="card border-0 shadow-sm p-3 text-center bg-danger text-white rounded-lg">
+                    <h2 class="font-weight-bold mb-0">{{application_count}}</h2>
+                    <p class="mb-0 small">Applications</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4 mb-4">
+                <div
+                    class="card border-0 shadow-lg p-4 text-center bg-white h-100 hover-elevate transition border-top border-primary border-4">
+                    <div class="icon-box bg-primary text-white p-4 rounded-lg d-inline-block mb-3 shadow">
+                        <i class="fa fa-users fa-2x"></i>
+                    </div>
+                    <h4 class="font-weight-bold">View Students</h4>
+                    <p class="text-secondary small">Manage candidate profiles.</p>
+                    <a href="{% url 'view_users' %}"
+                        class="btn btn-outline-primary mt-auto rounded-pill shadow-sm">Manage Users &rarr;</a>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div
+                    class="card border-0 shadow-lg p-4 text-center bg-white h-100 hover-elevate transition border-top border-success border-4">
+                    <div class="icon-box bg-success text-white p-4 rounded-lg d-inline-block mb-3 shadow">
+                        <i class="fa fa-id-card fa-2x"></i>
+                    </div>
+                    <h4 class="font-weight-bold">Recruiters</h4>
+                    <p class="text-secondary small">Approve pending recruiter accounts.</p>
+                    <a href="{% url 'view_recruiters' %}"
+                        class="btn btn-outline-success mt-auto rounded-pill shadow-sm">Verification &rarr;</a>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div
+                    class="card border-0 shadow-lg p-4 text-center bg-white h-100 hover-elevate transition border-top border-info border-4">
+                    <div class="icon-box bg-info text-white p-4 rounded-lg d-inline-block mb-3 shadow">
+                        <i class="fa fa-clipboard-list fa-2x"></i>
+                    </div>
+                    <h4 class="font-weight-bold">Manage Jobs</h4>
+                    <p class="text-secondary small">Review or remove site-wide job listings.</p>
+                    <a href="{% url 'admin_view_jobs' %}"
+                        class="btn btn-outline-info mt-auto rounded-pill shadow-sm">System Jobs &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5 p-5 bg-gradient-dark text-white rounded-lg shadow-xl">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h3 class="font-weight-bold mb-3">Recent System Performance</h3>
+                    <p class="lead opacity-75">"Total platform integrity maintained. {{application_count}} applications
+                        processed smoothly."</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <span class="btn btn-light rounded-pill px-4 disabled"><i
+                            class="fa fa-circle text-success mr-2 blink"></i> Status: Healthy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .transition {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .hover-elevate:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, .15) !important;
+    }
+
+    .bg-gradient-dark {
+        background: linear-gradient(135deg, #2c3e50, #000);
+    }
+
+    .border-4 {
+        border-width: 6px !important;
+    }
+
+    .blink {
+        animation: blinker 1.5s linear infinite;
+    }
+
+    @keyframes blinker {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    .shadow-xl {
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+</style>
+
+{% endblock %}

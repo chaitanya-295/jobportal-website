@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Platform Applications Inventory{% endblock %}
+
+{% block content %}
+
+<section style="padding-top: 100px; background-color: #f8f9fa; min-height: 100vh;">
+    <div class="container py-4">
+        <h2 class="text-center font-weight-bold mb-5 text-primary d-flex align-items-center justify-content-center">
+             <i class="fa fa-envelope-open-text me-3 bg-white p-3 rounded-circle shadow-sm"></i> Global Application Ledger
+        </h2>
+        
+        <div class="row">
+            <div class="col-md-11 mx-auto">
+                <table class="table align-middle" id="appTableAdmin">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Opportunity</th>
+                            <th>Talent / Candidate</th>
+                            <th>Hiring Partner</th>
+                            <th>Timeline</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in applications %}
+                        <tr>
+                            <td class="font-weight-bold text-muted">{{forloop.counter}}</td>
+                            <td>
+                                <h6 class="font-weight-bold text-primary mb-1">{{a.job.title}}</h6>
+                                <span class="badge bg-light text-dark rounded-pill">ID: #{{a.job.id}}</span>
+                            </td>
+                            <td>
+                                <div class="font-weight-bold text-dark mb-1 text-capitalize">{{a.student.user.first_name}} {{a.student.user.last_name}}</div>
+                                <small class="text-muted"><i class="fa fa-envelope small me-1"></i> {{a.student.user.email}}</small>
+                            </td>
+                            <td class="text-dark font-weight-bold">{{a.job.recruiter.company}}</td>
+                            <td class="text-muted small">
+                                <div class="text-dark font-weight-bold">Apply: {{a.applydate|date:"D d M, Y"}}</div>
+                                <a href="{{a.resume.url}}" class="btn btn-link py-1 px-0 text-info font-weight-bold small" target="_blank">View CV</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'delete_application_admin' a.id %}" class="btn btn-outline-danger btn-sm rounded-pill px-4 shadow-sm" onclick="return confirm('Confirm application deletion?')">
+                                    <i class="fa fa-trash-alt me-2"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        $('#appTableAdmin').DataTable({
+            "destroy": true,
+            "pageLength": 10,
+            "ordering": true,
+            "info": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+                "search": "FILTER LEDGER:",
+                "searchPlaceholder": "Candidate or partner..."
+            }
+        });
+    });
+</script>
+{% endblock %}

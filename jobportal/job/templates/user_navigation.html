@@ -1,0 +1,63 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm py-2">
+    <div class="container">
+        <!-- LOGO -->
+        <a class="navbar-brand" href="{% url 'user_home' %}">
+            <img src="{% static 'images/Hireup-logo.png' %}" height="45">
+        </a>
+        
+        <!-- TOGGLER -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#userNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- NAV CONTENT -->
+        <div class="collapse navbar-collapse" id="userNavbar">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="{% url 'user_home' %}">
+                        <i class="fa fa-th-large mr-1"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="{% url 'user_latestjobs' %}">
+                        <i class="fa fa-briefcase mr-1"></i> Explore Jobs
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="{% url 'applied_jobs' %}">
+                        <i class="fa fa-paper-plane mr-1"></i> My Applications
+                    </a>
+                </li>
+
+                <!-- DROPDOWN -->
+                <li class="nav-item dropdown ms-lg-3">
+                    <a class="nav-link dropdown-toggle btn btn-primary text-white rounded-pill px-4 shadow-sm" href="#" 
+                       id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user-circle mr-1"></i> {{ request.user.first_name }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-lg">
+                        <a class="dropdown-item py-2" href="{% url 'user_profile' %}">
+                            <i class="fa fa-user-edit mr-2 text-primary"></i> My Profile
+                        </a>
+                        <a class="dropdown-item py-2" href="{% url 'change_password_user' %}">
+                            <i class="fa fa-lock mr-2 text-warning"></i> Change Password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item py-2 text-danger" href="{% url 'Logout' %}">
+                            <i class="fa fa-sign-out-alt mr-2"></i> Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<style>
+    .nav-link { font-weight: 500; transition: color 0.3s; }
+    .nav-link:hover { color: #007bff !important; }
+    .dropdown-item { font-weight: 500; }
+    .dropdown-item:hover { background-color: #f8f9fa; }
+    .rounded-lg { border-radius: 1rem !important; }
+</style>

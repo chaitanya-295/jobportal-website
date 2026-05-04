@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+
+<section style="padding-top: 80px;">
+    <div class="container py-3">
+        <h2 class="text-center font-weight-bold mb-5 text-primary">Modify Account Details</h2>
+        
+        <div class="row">
+            <div class="col-md-7 mx-auto">
+                <div class="card border-0 shadow-lg p-5 bg-white rounded-lg">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row g-4">
+                            <!-- PERSONAL INFO -->
+                            <div class="col-md-12">
+                                <h5 class="font-weight-bold mb-3 border-bottom pb-2">Personal Information</h5>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label class="font-weight-bold">First Name</label>
+                                <input type="text" name="firstname" value="{{recruiter.user.first_name}}" class="form-control p-3 border rounded shadow-sm" required>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <label class="font-weight-bold">Last Name</label>
+                                <input type="text" name="lastname" value="{{recruiter.user.last_name}}" class="form-control p-3 border rounded shadow-sm" required>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="font-weight-bold">Contact Number</label>
+                                <input type="text" name="contact" value="{{recruiter.mobile}}" class="form-control p-3 border rounded shadow-sm" required>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="font-weight-bold">Gender Preference</label>
+                                <select name="gender" class="form-control p-3 border rounded shadow-sm" required>
+                                    <option value="male" {% if recruiter.gender == 'male' %}selected{% endif %}>Male</option>
+                                    <option value="female" {% if recruiter.gender == 'female' %}selected{% endif %}>Female</option>
+                                </select>
+                            </div>
+
+                            <!-- COMPANY INFO -->
+                            <div class="col-md-12 mt-4">
+                                <h5 class="font-weight-bold mb-3 border-bottom pb-2">Business Information</h5>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <label class="font-weight-bold">Registered Company Name</label>
+                                <input type="text" name="company" value="{{recruiter.company}}" class="form-control p-3 border rounded shadow-sm" required>
+                            </div>
+
+                            <div class="col-md-12 mb-5">
+                                <label class="font-weight-bold">Business Logo / Brand Graphic</label>
+                                <input type="file" name="image" class="form-control p-3 border rounded shadow-sm mb-2">
+                                <small class="text-muted">Currently: <a href="{{recruiter.image.url}}" target="_blank">{{recruiter.image.name}}</a></small>
+                            </div>
+
+                            <div class="text-center d-grid gap-3 mt-4">
+                                <input type="submit" value="Save My Updates" class="btn btn-primary btn-lg rounded-pill shadow font-weight-bold">
+                                <a href="{% url 'recruiter_profile' %}" class="btn btn-link text-muted font-weight-bold">Discard Changes</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if error == "no" %}
+<script>
+    alert('Partner profile successfully updated.');
+    window.location = "{% url 'recruiter_profile' %}";
+</script>
+{% elif error == "yes" %}
+<script>
+    alert('An unexpected error occurred during profile sync. Please try again.');
+</script>
+{% endif %}
+
+<style>
+    .rounded-lg { border-radius: 2rem !important; }
+</style>
+
+{% endblock %}

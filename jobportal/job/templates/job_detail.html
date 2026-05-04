@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Opportunity: {{job.title}} @ {{job.recruiter.company}}{% endblock %}
+
+{% block content %}
+
+<section style="padding-top: 80px;">
+    <div class="container py-3">
+        <div class="row">
+            <div class="col-lg-9 mx-auto">
+                <div class="card border-0 shadow-lg rounded-xl overflow-hidden bg-white">
+                    <!-- HERO HEADER -->
+                    <div class="bg-gradient-primary p-5 text-white">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 text-center mb-3 mb-md-0">
+                                <div class="bg-white rounded-lg p-2 shadow-sm d-inline-block">
+                                    <img src="{{job.image.url}}" alt="{{job.recruiter.company}}" style="height: 80px; width: 80px; object-fit: contain;">
+                                </div>
+                            </div>
+                            <div class="col-md-10 text-center text-md-start">
+                                <h1 class="font-weight-bold mb-1">{{job.title}}</h1>
+                                <h4 class="opacity-75 mb-3">{{job.recruiter.company}}</h4>
+                                <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-3">
+                                    <span class="small"><i class="fa fa-map-marker-alt me-1"></i> {{job.location}}</span>
+                                    <span class="small"><i class="fa fa-briefcase me-1"></i> {{job.experience}}</span>
+                                    <span class="small"><i class="fa fa-calendar-alt me-1"></i> Posted {{job.creationdate|timesince}} ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-5">
+                        <!-- QUICK STATS -->
+                        <div class="row g-4 mb-5 card-stats-wrapper">
+                            <div class="col-md-4">
+                                <div class="p-3 border rounded-lg bg-light h-100">
+                                    <label class="text-muted small font-weight-bold d-block text-uppercase mb-2">Package Range</label>
+                                    <h4 class="text-success font-weight-bold mb-0">${{job.salary|floatformat:0}} <small class="text-muted" style="font-size: 0.6em">/ Annum</small></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="p-3 border rounded-lg bg-light h-100">
+                                    <label class="text-muted small font-weight-bold d-block text-uppercase mb-2">Onboarding</label>
+                                    <h4 class="text-dark font-weight-bold mb-0">{{job.start_date}}</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="p-3 border rounded-lg bg-light h-100">
+                                    <label class="text-muted small font-weight-bold d-block text-uppercase mb-2">Closes On</label>
+                                    <h4 class="text-danger font-weight-bold mb-0">{{job.end_date}}</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CONTENT -->
+                        <div class="row g-5">
+                            <div class="col-md-12">
+                                <h5 class="font-weight-bold mb-3 border-bottom pb-2">Technical Skills & Expertise</h5>
+                                <div class="d-flex flex-wrap gap-2 mb-5">
+                                    {% for skill in job.skills.split %}
+                                        <span class="badge bg-soft-primary text-primary border border-primary px-3 py-2 rounded-pill">{{skill}}</span>
+                                    {% endfor %}
+                                </div>
+
+                                <h5 class="font-weight-bold mb-3 border-bottom pb-2">Full Responsibility & Criteria</h5>
+                                <div class="text-dark" style="line-height: 1.8; white-space: pre-wrap; font-size: 1.05rem;">{{job.description}}</div>
+                            </div>
+                        </div>
+
+                        <!-- CTA -->
+                        <div class="text-center mt-5 pt-5 border-top">
+                            {% if request.user.userprofile_set.first %}
+                                <a href="{% url 'apply_for_job' job.id %}" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow-lg font-weight-bold">Apply Now & Proceed to Selection</a>
+                            {% elif request.user.is_authenticated %}
+                                <p class="text-muted">You are logged in as <span class="text-dark font-weight-bold">{{request.user.username}}</span>. Only student accounts can apply.</p>
+                            {% else %}
+                                <a href="{% url 'user_login' %}" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow-lg font-weight-bold">Login to Apply Now</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                     <a href="javascript:history.back()" class="btn btn-link text-muted font-weight-bold">
+                        <i class="fa fa-arrow-left mr-2"></i> Back to Explore
+                     </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .rounded-xl { border-radius: 2.5rem !important; }
+    .rounded-lg { border-radius: 1rem !important; }
+    .bg-gradient-primary { background: linear-gradient(135deg, #007bff, #1c4e80); }
+    .bg-soft-primary { background-color: rgba(0, 123, 255, 0.08); }
+    .letter-spacing-1 { letter-spacing: 1px; }
+    .card-stats-wrapper h4 { letter-spacing: -1px; }
+</style>
+
+{% endblock %}

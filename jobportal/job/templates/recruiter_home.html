@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Recruiter Dashboard{% endblock %}
+
+{% block content %}
+<section style="padding-top: 80px;">
+    <div class="container py-3">
+        <div class="row mb-4">
+            <div class="col-md-9">
+                <h1 class="display-5 font-weight-bold text-dark">Welcome, {{request.user.first_name}}!</h1>
+                <p class="lead text-muted">You are managing hiring for <span class="text-primary font-weight-bold">{{recruiter.company}}</span></p>
+            </div>
+            <div class="col-md-3 text-md-end">
+                <img src="{{recruiter.image.url}}" class="rounded shadow-sm border p-1 bg-white" style="height: 80px; width: 80px; object-fit: contain;">
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-lg p-4 bg-gradient-primary text-white rounded-xl h-100">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="font-weight-bold mb-0 display-4">{{job_count}}</h2>
+                            <p class="mb-0 opacity-75">Active Job Postings</p>
+                        </div>
+                        <i class="fa fa-briefcase fa-3x opacity-25"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-lg p-4 bg-gradient-success text-white rounded-xl h-100">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="font-weight-bold mb-0 display-4">{{app_count}}</h2>
+                            <p class="mb-0 opacity-75">Applications Received</p>
+                        </div>
+                        <i class="fa fa-file-signature fa-3x opacity-25"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <div class="card border-0 shadow-lg p-4 bg-white text-dark rounded-xl h-100 border-left-info">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="font-weight-bold mb-2">Quick Actions</h5>
+                            <a href="{% url 'add_job' %}" class="btn btn-info text-white rounded-pill btn-sm px-3 mb-2 shadow-sm">Post New Vacancy</a>
+                            <a href="{% url 'view_applications' %}" class="btn btn-outline-info rounded-pill btn-sm px-3 mb-2 shadow-sm">Review Talent</a>
+                        </div>
+                        <i class="fa fa-rocket fa-2x text-info opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-2">
+            <div class="col-md-12">
+                <div class="card border-0 shadow-sm p-5 bg-dark text-white rounded-xl">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h3 class="font-weight-bold mb-3">Maximize Your Hiring</h3>
+                            <p class="lead opacity-75">"Top talent looks for detail. Keep your job descriptions clear and highlight your company culture."</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                             <a href="{% url 'recruiter_profile' %}" class="btn btn-light rounded-pill px-5 py-2 font-weight-bold">Company Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .rounded-xl { border-radius: 2rem !important; }
+    .bg-gradient-primary { background: linear-gradient(135deg, #007bff, #0056b3); }
+    .bg-gradient-success { background: linear-gradient(135deg, #28a745, #1e7e34); }
+    .border-left-info { border-left: 8px solid #17a2b8 !important; }
+    .shadow-lg { box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important; }
+</style>
+{% endblock %}

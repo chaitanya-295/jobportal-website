@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Discover Your Next Career Step{% endblock %}
+
+{% block content %}
+
+<section style="padding-top: 80px;">
+    <div class="container py-3">
+        <div class="text-center mb-5 border-bottom pb-4">
+            <h1 class="display-4 font-weight-bold text-dark mb-2">Explore Opportunities</h1>
+            <p class="lead text-muted">Join the top engineering and management teams worldwide.</p>
+        </div>
+        
+        <div class="row g-4">
+            {% for j in job %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card border-0 shadow-lg h-100 rounded-xl overflow-hidden hover-elevate transition bg-white">
+                    <!-- HEADER -->
+                    <div class="bg-light p-4 border-bottom text-center">
+                        <div class="bg-white rounded-circle shadow-sm d-inline-flex align-items-center justify-content-center mb-3" style="height: 70px; width: 70px; border: 2px solid #fff;">
+                            <img src="{{j.image.url}}" alt="{{j.recruiter.company}}" style="max-height: 45px; max-width: 45px; object-fit: contain;">
+                        </div>
+                        <h5 class="font-weight-bold text-dark mb-0">{{j.title}}</h5>
+                        <p class="text-primary font-weight-bold small mb-2 text-uppercase letter-spacing-1">{{j.recruiter.company}}</p>
+                    </div>
+
+                    <!-- BODY -->
+                    <div class="card-body p-4">
+                        <div class="row g-3 mb-4">
+                            <div class="col-6">
+                                <label class="text-muted small d-block font-weight-bold">Location</label>
+                                <span class="text-dark small font-weight-bold"><i class="fa fa-map-marker-alt text-danger mr-1"></i> {{j.location}}</span>
+                            </div>
+                            <div class="col-6 text-end">
+                                <label class="text-muted small d-block font-weight-bold">Experience</label>
+                                <span class="text-dark small font-weight-bold"><i class="fa fa-briefcase text-info mr-1"></i> {{j.experience}}</span>
+                            </div>
+                            <div class="col-6">
+                                <label class="text-muted small d-block font-weight-bold">Package (CTC)</label>
+                                <span class="text-success small font-weight-bold"><i class="fa fa-money-bill-wave mr-1"></i> ${{j.salary|floatformat:0}}</span>
+                            </div>
+                            <div class="col-6 text-end">
+                                <label class="text-muted small d-block font-weight-bold">Apply By</label>
+                                <span class="text-danger small font-weight-bold"><i class="fa fa-calendar-times mr-1"></i> {{j.end_date}}</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <p class="text-muted small mb-0">{{j.description|truncatewords:20}}</p>
+                        </div>
+
+                        <!-- FOOTER -->
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            {% for skill in j.skills.split|slice:":3" %}
+                                <span class="badge bg-soft-primary text-primary border border-primary px-3 py-2 rounded-pill small">{{skill}}</span>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-grid pt-3 border-top">
+                            {% if j.id in applied_jobs %}
+                                <button class="btn btn-secondary btn-lg rounded-pill shadow-sm py-2 font-weight-bold disabled" disabled>
+                                    <i class="fa fa-check-circle mr-2"></i> Successfully Applied
+                                </button>
+                            {% else %}
+                                <a href="{% url 'job_detail' j.id %}" class="btn btn-primary btn-lg rounded-pill shadow font-weight-bold py-2">
+                                    <i class="fa fa-paper-plane mr-2"></i> View & Apply Now
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <div class="card border-0 shadow-lg p-5 rounded-xl bg-light">
+                    <i class="fa fa-search fa-5x text-muted opacity-25 mb-4"></i>
+                    <h3 class="text-dark font-weight-bold">No results found for your search</h3>
+                    <p class="text-muted lead">New opportunities are published every hour. Please check back later.</p>
+                    <a href="{% url 'user_home' %}" class="btn btn-primary rounded-pill px-5 py-3 font-weight-bold mt-3 shadow">Return to Dashboard</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+    .rounded-xl { border-radius: 1.5rem !important; }
+    .bg-soft-primary { background-color: rgba(0, 123, 255, 0.08); }
+    .letter-spacing-1 { letter-spacing: 1px; }
+    .transition { transition: all 0.3s cubic-bezier(.25,.8,.25,1); }
+    .hover-elevate:hover { transform: translateY(-10px); box-shadow: 0 1.5rem 4rem rgba(0,0,0,.15)!important; }
+</style>
+
+{% endblock %}

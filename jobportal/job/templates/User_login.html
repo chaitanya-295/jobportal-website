@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}User Login | HireUp{% endblock %}
+
+{% block content %}
+<div class="login-page">
+    <div class="login-card">
+        <h2>User Login</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label>Email ID</label>
+            <input type="email" name="uname" class="form-control mt-2" placeholder="Enter email id" required>
+
+            <label>Password</label>
+            <input type="password" name="pwd" class="form-control mt-2" placeholder="Enter password" required>
+
+            <input type="submit" class="btn btn-primary mt-4 w-100" value="Login">
+        </form>
+
+        <div class="login-divider">or</div>
+
+        <p class="register-text">
+            New to HireUp?
+            <a href="{% url 'user_register' %}">Create an account</a>
+        </p>
+    </div>
+</div>
+
+{% if error == "no" %}
+<script>
+  alert("Login Successful!");
+  window.location = "{% url 'user_home' %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+  alert("Invalid Login Credentials, Please try again.");
+</script>
+{% endif %}
+
+
+{% endblock %}

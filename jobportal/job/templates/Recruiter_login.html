@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Recruiter Login | HireUp{% endblock %}
+
+{% block content %}
+<div class="login-page">
+    <div class="login-card">
+
+        <h2>Recruiter Login</h2>
+        <p class="text-center text-muted mb-3">
+            Login to manage jobs & applications
+        </p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label>Email ID</label>
+            <input type="text" name="username" class="form-control mt-2" placeholder="Enter email id" required>
+
+            <label>Password</label>
+            <input type="password" name="password" class="form-control mt-2" placeholder="Password" required>
+
+            <input type="submit" class="btn btn-primary mt-4 w-100" value="Login as Recruiter">
+        </form>
+
+        <div class="login-divider">or</div>
+
+        <p class="register-text">
+            New recruiter?
+            <a href="{% url 'recruiter_register' %}">Register your company</a>
+        </p>
+
+    </div>
+</div>
+
+{% if error == "no" %}
+<script>
+  alert("Login Successful!");
+  window.location = "{% url 'recruiter_home' %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+  alert("Invalid Login Credentials, Please try again.");
+</script>
+{% endif %}
+
+{% if error == "not" %}
+<script>
+  alert("Your Login Status is Pending.");
+</script>
+{% endif %}
+
+
+{% endblock %}

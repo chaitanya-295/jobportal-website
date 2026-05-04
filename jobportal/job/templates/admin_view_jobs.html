@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Platform Job Inventory{% endblock %}
+
+{% block content %}
+
+<section style="padding-top: 100px; background-color: #f8f9fa; min-height: 100vh;">
+    <div class="container py-4">
+        <h2 class="text-center font-weight-bold mb-5 text-primary d-flex align-items-center justify-content-center">
+             <i class="fa fa-clipboard-list me-3 bg-white p-3 rounded-circle shadow-sm"></i> Global Vacancy Explorer
+        </h2>
+        
+        <div class="row">
+            <div class="col-md-11 mx-auto">
+                <table class="table align-middle" id="jobTableAdmin">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Opportunity</th>
+                            <th>Hiring Partner</th>
+                            <th>Package</th>
+                            <th>Exp</th>
+                            <th>Post Detail</th>
+                            <th>Management</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for j in jobs %}
+                        <tr>
+                            <td class="font-weight-bold text-muted">{{forloop.counter}}</td>
+                            <td>
+                                <h6 class="font-weight-bold text-primary mb-1">{{j.title}}</h6>
+                                <small class="text-muted"><i class="fa fa-map-marker-alt small me-1"></i> {{j.location}}</small>
+                            </td>
+                            <td class="text-dark font-weight-bold">{{j.recruiter.company}}</td>
+                            <td class="text-success font-weight-bold">${{j.salary}}</td>
+                            <td class="text-center">{{j.experience}}Y</td>
+                            <td class="text-muted small">
+                                <div class="text-dark font-weight-bold">Post: {{j.creationdate|date:"d M Y"}}</div>
+                                <div class="text-danger">End: {{j.end_date}}</div>
+                            </td>
+                            <td>
+                                <div class="btn-group gap-2">
+                                    <a href="{% url 'job_detail' j.id %}" class="btn btn-outline-info btn-sm rounded-circle p-2 px-3 shadow-sm border"><i class="fa fa-eye"></i></a>
+                                    <a href="{% url 'delete_job_admin' j.id %}" class="btn btn-outline-danger btn-sm rounded-circle p-2 px-3 shadow-sm border" onclick="return confirm('Confirm global job removal?')"><i class="fa fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        $('#jobTableAdmin').DataTable({
+            "destroy": true,
+            "pageLength": 10,
+            "ordering": true,
+            "info": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+                "search": "FILTER VACANCIES:",
+                "searchPlaceholder": "Search job or partner..."
+            }
+        });
+    });
+</script>
+{% endblock %}

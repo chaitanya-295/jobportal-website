@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hiring Partner Registration | HireUp{% endblock %}
+
+{% block content %}
+<section class="registration-section py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #eef1ff 100%); min-height: 100vh; padding-top: 120px !important;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden animate__animated animate__fadeInUp">
+                    <div class="row g-0">
+                        <div class="col-md-12 p-4 p-md-5 bg-white">
+                            <div class="text-center mb-5">
+                                <h2 class="fw-bold text-dark">Join as a Hiring Partner</h2>
+                                <p class="text-muted">Register your company and start finding top-tier talent today</p>
+                                <div class="mx-auto bg-dark rounded-pill" style="height: 4px; width: 60px;"></div>
+                            </div>
+
+                            <form method="post" enctype="multipart/form-data" name="signup" onsubmit="return checkpass()" class="needs-validation">
+                                {% csrf_token %}
+                                
+                                <div class="row mt-4">
+                                    <!-- FIRST NAME -->
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label fw-600 text-muted small text-uppercase">Partner's First Name</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-end-0"><i class="fa fa-user-tie text-info"></i></span>
+                                            <input type="text" name="first_name" class="form-control bg-light border-start-0 ps-0" placeholder="e.g. Sarah" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- LAST NAME -->
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label fw-600 text-muted small text-uppercase">Partner's Last Name</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-end-0"><i class="fa fa-user-shield text-info"></i></span>
+                                            <input type="text" name="last_name" class="form-control bg-light border-start-0 ps-0" placeholder="e.g. Miller" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <!-- COMPANY NAME -->
+                                    <label class="form-label fw-600 text-muted small text-uppercase">Legally Registered Company Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0"><i class="fa fa-building text-info"></i></span>
+                                        <input type="text" name="company_name" class="form-control bg-light border-start-0 ps-0" placeholder="e.g. Acme Tech Solutions" required>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- CONTACT -->
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label fw-600 text-muted small text-uppercase">Mobile Number</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-end-0"><i class="fa fa-phone text-info"></i></span>
+                                            <input type="text" name="phone" class="form-control bg-light border-start-0 ps-0" placeholder="+91 XXXXX XXXXX" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- EMAIL -->
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label fw-600 text-muted small text-uppercase">Business Email Address</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-end-0"><i class="fa fa-envelope text-info"></i></span>
+                                            <input type="email" name="email" class="form-control bg-light border-start-0 ps-0" placeholder="sarah.miller@company.com" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- PASSWORD -->
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label fw-600 text-muted small text-uppercase">Create Secure Password</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-end-0"><i class="fa fa-key text-info"></i></span>
+                                            <input type="password" name="password" class="form-control bg-light border-start-0 ps-0" placeholder="••••••••" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- CONFIRM PASSWORD -->
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label fw-600 text-muted small text-uppercase">Verify Password</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-end-0"><i class="fa fa-shield-halved text-info"></i></span>
+                                            <input type="password" name="confirm_password" class="form-control bg-light border-start-0 ps-0" placeholder="••••••••" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center mb-4">
+                                    <!-- GENDER -->
+                                    <div class="col-md-6 mb-4 mb-md-0">
+                                        <label class="form-label fw-600 text-muted small text-uppercase mb-3 d-block">Gender Identification</label>
+                                        <div class="d-flex gap-4">
+                                            <div class="form-check custom-radio">
+                                                <input class="form-check-input" type="radio" name="gender" id="male" value="male" required checked>
+                                                <label class="form-check-label" for="male">Male</label>
+                                            </div>
+                                            <div class="form-check custom-radio">
+                                                <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                                <label class="form-check-label" for="female">Female</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- IMAGE -->
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-600 text-muted small text-uppercase">Partner Avatar / Photo</label>
+                                        <input type="file" name="image" class="form-control bg-light border-0 py-2">
+                                    </div>
+                                </div>
+
+                                <div class="d-grid gap-2 mt-5">
+                                    <button type="submit" class="btn btn-dark btn-lg rounded-pill shadow-sm fw-bold py-3 transition-all hover-lift">
+                                        Register Now <i class="fa fa-arrow-right ms-2 small"></i>
+                                    </button>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <p class="text-muted small">Access an existing partner dashboard? 
+                                        <a href="{% url 'recruiter_login' %}" class="text-dark fw-bold text-decoration-none border-bottom border-dark pb-1">Sign In instead</a>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .fw-600 { font-weight: 600; }
+    .transition-all { transition: all 0.3s ease; }
+    .hover-lift:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; }
+    .input-group-text { border: 1px solid #f2f2f2; }
+    .form-control:focus { box-shadow: none; border-color: #0dcaf0; background: #fff !important; }
+    .custom-radio .form-check-input:checked { background-color: #0dcaf0; border-color: #0dcaf0; }
+    .animate__animated { animation-duration: 0.8s; }
+</style>
+
+<script>
+  function checkpass() {
+    const password = document.signup.password.value;
+    const confirmPassword = document.signup.confirm_password.value;
+
+    if (password !== confirmPassword) {
+        alert("⚠️ Authentication Warning: Your password verification failed. Please ensure both fields match.");
+        document.signup.confirm_password.focus();
+        return false;
+    }
+    return true;
+  }
+</script>
+
+{% if error == "no" %}
+<script>
+  alert("🏢 Business Registration Successfully Received! Redirecting you to the platform login.");
+  window.location = "{% url 'recruiter_login' %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+  alert("❌ Application Error: We encountered an issue during registration. Please verify your company details.");
+</script>
+{% endif %}
+{% endblock %}

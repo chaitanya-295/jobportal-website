@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Change Status{% endblock %}
+
+{% block content %}
+
+<section style="padding-top: 80px;">
+    <div class="container py-3">
+        <h2 class="text-center font-weight-bold mb-5 text-primary">Assign Account Status</h2>
+        
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="job-card p-5 shadow border rounded bg-white">
+                    <h4 class="mb-4 text-center">Change Status for Recruiter:</h4>
+                    <h5 class="text-center font-weight-bold mb-5">{{recruiter.user.first_name}} {{recruiter.user.last_name}} - <span class="text-primary">{{recruiter.company}}</span></h5>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group mb-4">
+                            <label class="font-weight-bold">Select Status:</label>
+                            <select name="status" class="form-control border p-2 rounded shadow-sm" required>
+                                <option value="Accept" {% if recruiter.status == 'Accept' %}selected{% endif %}>Accept</option>
+                                <option value="Reject" {% if recruiter.status == 'Reject' %}selected{% endif %}>Reject</option>
+                            </select>
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <input type="submit" value="Update Status" class="btn btn-primary btn-lg rounded-pill px-5 shadow">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

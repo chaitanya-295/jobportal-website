@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Company Profile{% endblock %}
+
+{% block content %}
+
+<section style="padding-top: 80px;">
+    <div class="container py-3">
+        <h2 class="text-center font-weight-bold mb-5 text-primary">Recruiter Account Details</h2>
+        
+        <div class="row">
+            <div class="col-md-9 mx-auto">
+                <div class="card border-0 shadow-lg p-5 bg-white rounded-lg">
+                    <div class="row g-4 align-items-center">
+                        <!-- LEFT -->
+                        <div class="col-md-4 text-center border-right">
+                            <div class="position-relative d-inline-block mb-3">
+                                {% if recruiter.image %}
+                                    <img src="{{recruiter.image.url}}" class="rounded-circle shadow border p-2 bg-light" style="height: 160px; width: 160px; object-fit: contain;">
+                                {% else %}
+                                    <div class="bg-primary text-white rounded-circle shadow d-inline-flex align-items-center justify-content-center" style="height: 160px; width: 160px; font-size: 4rem;">
+                                        {{recruiter.company|first|upper}}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <h4 class="font-weight-bold mb-0 text-dark">{{recruiter.company}}</h4>
+                            <p class="text-muted text-uppercase small letter-spacing-1">Verified Hiring Partner</p>
+                        </div>
+
+                        <!-- RIGHT -->
+                        <div class="col-md-8 ps-md-5">
+                            <div class="row g-4 mb-4">
+                                <div class="col-6">
+                                    <label class="text-muted small text-uppercase font-weight-bold">Primary Contact</label>
+                                    <h5 class="text-dark">{{recruiter.user.first_name}} {{recruiter.user.last_name}}</h5>
+                                </div>
+                                <div class="col-6">
+                                    <label class="text-muted small text-uppercase font-weight-bold">Company Status</label>
+                                    <h5 class="{% if recruiter.status == 'Accept' %}text-success{% else %}text-warning{% endif %} font-weight-bold">{{recruiter.status|title}}</h5>
+                                </div>
+                                <div class="col-6">
+                                    <label class="text-muted small text-uppercase font-weight-bold">Email Address</label>
+                                    <h5 class="text-dark">{{recruiter.user.email}}</h5>
+                                </div>
+                                <div class="col-6">
+                                    <label class="text-muted small text-uppercase font-weight-bold">Mobile No.</label>
+                                    <h5 class="text-dark">{{recruiter.mobile}}</h5>
+                                </div>
+                                <div class="col-6">
+                                    <label class="text-muted small text-uppercase font-weight-bold">Gender</label>
+                                    <h5 class="text-dark text-capitalize">{{recruiter.gender}}</h5>
+                                </div>
+                                <div class="col-6">
+                                    <label class="text-muted small text-uppercase font-weight-bold">D.O.Join</label>
+                                    <h5 class="text-dark small">{{recruiter.user.date_joined|date:"M d, Y"}}</h5>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-3 pt-4 border-top">
+                                <a href="{% url 'edit_recruiter_profile' %}" class="btn btn-primary rounded-pill px-4 shadow-sm font-weight-bold">
+                                    <i class="fa fa-edit mr-2"></i> Edit Account
+                                </a>
+                                <a href="{% url 'change_password_recruiter' %}" class="btn btn-warning rounded-pill px-4 shadow-sm font-weight-bold">
+                                    <i class="fa fa-key mr-2"></i> Update Security
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .letter-spacing-1 { letter-spacing: 1px; }
+    .rounded-lg { border-radius: 1.5rem !important; }
+    .border-right { border-right: 2px solid #f8f9fa; }
+    @media (max-width: 768px) { .border-right { border-right: none; border-bottom: 2px solid #f8f9fa; margin-bottom: 30px; padding-bottom: 30px; } }
+</style>
+
+{% endblock %}

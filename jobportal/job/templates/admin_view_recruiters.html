@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Hiring Partners{% endblock %}
+
+{% block content %}
+
+<section style="padding-top: 100px; background-color: #f8f9fa; min-height: 100vh;">
+    <div class="container py-4">
+        <h2 class="text-center font-weight-bold mb-5 text-primary d-flex align-items-center justify-content-center">
+             <i class="fa fa-briefcase me-3 bg-white p-3 rounded-circle shadow-sm"></i> Recruitment Partner Management
+        </h2>
+        
+        <div class="row">
+            <div class="col-md-11 mx-auto">
+                <table class="table align-middle" id="recTableAdmin">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Identity</th>
+                            <th>Hiring Partner</th>
+                            <th>Communication</th>
+                            <th>Verification</th>
+                            <th>Management</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in recruiters %}
+                        <tr>
+                            <td class="font-weight-bold text-muted">{{forloop.counter}}</td>
+                            <td>
+                                <h6 class="font-weight-bold text-primary mb-1">{{r.user.first_name}} {{r.user.last_name}}</h6>
+                                <small class="text-muted"><i class="fa fa-phone small me-1"></i> {{r.mobile}}</small>
+                            </td>
+                            <td class="text-dark font-weight-bold">{{r.company}}</td>
+                            <td class="small text-muted font-weight-bold text-lowercase">{{r.user.email}}</td>
+                            <td>
+                                {% if r.status == 'pending' %}
+                                <span class="badge bg-warning shadow-sm px-3 rounded-pill">Pending Review</span>
+                                {% elif r.status == 'Accept' %}
+                                <span class="badge bg-success shadow-sm px-3 rounded-pill">Authenticated</span>
+                                {% else %}
+                                <span class="badge bg-danger shadow-sm px-3 rounded-pill">Rejected</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="btn-group gap-2">
+                                    <a href="{% url 'change_status' r.id %}" class="btn btn-outline-primary btn-sm rounded-pill px-3 shadow-sm border"><i class="fa fa-user-check"></i> Status</a>
+                                    <a href="{% url 'delete_recruiter' r.id %}" class="btn btn-outline-danger btn-sm rounded-circle p-2 px-3 shadow-sm border" onclick="return confirm('Confirm recruitment deletion?')"><i class="fa fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        $('#recTableAdmin').DataTable({
+            "destroy": true,
+            "pageLength": 10,
+            "ordering": true,
+            "info": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+                "search": "FILTER PARTNERS:",
+                "searchPlaceholder": "Search by identity or company..."
+            }
+        });
+    });
+</script>
+{% endblock %}

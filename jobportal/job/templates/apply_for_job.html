@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Application Terminal: {{job.title}}{% endblock %}
+
+{% block content %}
+
+<section style="padding-top: 80px;">
+    <div class="container py-3">
+        <h2 class="text-center font-weight-bold mb-5 text-primary">Finalize Your Application</h2>
+        
+        <div class="row">
+            <div class="col-md-7 mx-auto">
+                <div class="card border-0 shadow-lg px-5 py-4 bg-white rounded-xl">
+                    <div class="text-center mb-5 mt-3">
+                        <div class="bg-primary text-white rounded-circle shadow d-inline-flex align-items-center justify-content-center mb-3" style="height: 60px; width: 60px;">
+                            <i class="fa fa-briefcase fa-2x"></i>
+                        </div>
+                        <h4 class="font-weight-bold text-dark mb-1">Applying for: {{job.title}}</h4>
+                        <p class="text-muted mb-0">Hiring Partner: <span class="text-primary font-weight-bold">{{job.recruiter.company}}</span></p>
+                    </div>
+
+                    <form method="POST" enctype="multipart/form-data" class="bg-light p-5 rounded-lg border-2 border-dashed border-primary">
+                        {% csrf_token %}
+                        <div class="form-group mb-5">
+                            <label class="font-weight-bold d-block text-center mb-4"><i class="fa fa-cloud-upload-alt mr-2 text-primary"></i> Upload Your Professional Resume / CV</label>
+                            <input type="file" name="resume" class="form-control p-3 border shadow-sm bg-white" required>
+                            <small class="text-muted d-block text-center mt-3"><i class="fa fa-info-circle mr-1"></i> Formats: PDF, DOCX (Max: 5MB)</small>
+                        </div>
+
+                        <div class="text-center d-grid gap-3">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 shadow-lg font-weight-bold py-3">
+                                 <i class="fa fa-paper-plane mr-2"></i> Confirm & Send Application
+                            </button>
+                            <a href="{% url 'job_detail' job.id %}" class="btn btn-link text-muted font-weight-bold">Cancel Application</a>
+                        </div>
+                    </form>
+                    
+                    <div class="alert alert-warning mt-5 rounded-lg border-0 shadow-sm border-left-warning">
+                         <h6 class="font-weight-bold mb-1"><i class="fa fa-shield-alt mr-2"></i> Talent Protection Note</h6>
+                         <p class="small mb-0 opacity-75">Your personal information will only be shared with the Hiring Partner for recruitment purposes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if error == "no" %}
+<script>
+    alert("Impactful Move! Your application has been successfully delivered to the Hiring Partner.");
+    window.location = "{% url 'applied_jobs' %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert("Pipeline Error: We encountered an issue delivering your application. Please check your connection.");
+</script>
+{% endif %}
+
+<style>
+    .rounded-xl { border-radius: 2rem !important; }
+    .rounded-lg { border-radius: 1.5rem !important; }
+    .border-dashed { border-style: dashed !important; border-width: 2px !important; }
+    .border-left-warning { border-left: 5px solid #ffc107 !important; }
+</style>
+
+{% endblock %}

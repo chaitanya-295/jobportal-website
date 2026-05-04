@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Latest Jobs{% endblock %}
+
+{% block content %}
+{% include 'navigation.html' %}
+
+<section style="padding-top: 100px;">
+    <div class="container py-5">
+        <h2 class="text-center font-weight-bold mb-5">Latest Job Openings</h2>
+        
+        <div class="row">
+            {% for j in job %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="job-card p-4 shadow-sm border rounded bg-white">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{j.image.url}}" alt="{{j.recruiter.company}}" style="height: 50px; width: 50px; object-fit: contain;" class="mr-3">
+                        <div>
+                            <h5 class="mb-0">{{j.title}}</h5>
+                            <p class="text-muted mb-0 small">{{j.recruiter.company}}</p>
+                        </div>
+                    </div>
+                    <p class="mb-2"><i class="fa fa-map-marker text-primary mr-2"></i> {{j.location}}</p>
+                    <p class="mb-2"><i class="fa fa-briefcase text-primary mr-2"></i> {{j.experience}}</p>
+                    <p class="mb-3"><i class="fa fa-money text-primary mr-2"></i> ₹{{j.salary|floatformat:0}}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge badge-info">{{j.skills}}</span>
+                        <a href="{% url 'job_detail' j.id %}" class="btn btn-outline-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No jobs available at the moment.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

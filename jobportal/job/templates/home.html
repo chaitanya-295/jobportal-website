@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}HireUp{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="container hero-container">
+
+        <div class="hero-content">
+            <h1>Find Your Dream Job Faster</h1>
+            <p>Search jobs, apply instantly, and grow your career with top companies.</p>
+
+            <div class="hero-buttons">
+                <a href="{% url 'latest_jobs' %}" class="btn-primary">Find Jobs</a>
+                <a href="{% url 'recruiter_login' %}" class="btn-secondary">Post a Job</a>
+            </div>
+
+            <div class="hero-stats">
+                <div><h3>10K+</h3><p>Jobs</p></div>
+                <div><h3>1K+</h3><p>Companies</p></div>
+                <div><h3>50K+</h3><p>Candidates</p></div>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <img src="{% static 'images/hero-image.png' %}" alt="Job Search">
+        </div>
+
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-creative py-5" id="about">
+    <div class="container">
+
+        <!-- INTRO -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="font-weight-bold">About HireUp</h2>
+                <p class="mt-3">
+                    HireUp is a smart job portal designed to bridge the gap between
+                    job seekers and recruiters by making hiring simple, fast, and transparent.
+                </p>
+            </div>
+        </div>
+
+        <!-- CARDS -->
+        <div class="row">
+
+            <div class="col-lg-4 col-md-6 mb-4 d-flex">
+                <div class="highlight-card w-100">
+                    <h3>🎯 Our Mission</h3>
+                    <p>To empower job seekers and help companies discover the right talent.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4 d-flex">
+                <div class="highlight-card w-100">
+                    <h3>💡 What We Do</h3>
+                    <p>We provide an easy-to-use platform for jobs, vacancies, and applications.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4 d-flex">
+                <div class="highlight-card w-100">
+                    <h3>🤝 Who We Serve</h3>
+                    <p>Freshers, professionals, recruiters, and companies.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- STATEMENT -->
+        <div class="row justify-content-center my-5">
+            <div class="col-lg-8 text-center">
+                <h3 class="font-weight-bold">“Where Talent Meets Opportunity”</h3>
+                <p class="mt-3">
+                    HireUp helps people grow their careers with confidence.
+                </p>
+            </div>
+        </div>
+
+        <!-- TECH STACK -->
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="tech-stack-box text-center">
+                    <h3 class="font-weight-bold mb-4">Technology Stack</h3>
+                    <div class="tech-badges d-flex flex-wrap justify-content-center">
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+                        <span>Bootstrap</span>
+                        <span>Python</span>
+                        <span>Django</span>
+                        <span>MySQL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- JOBS -->
+<section class="jobs-section py-5" id="jobs">
+    <div class="container text-center">
+        <h2>Latest Job Openings</h2>
+        <p class="mb-5">Explore opportunities from top companies.</p>
+
+        <div class="row">
+            {% for j in job %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="job-card shadow-sm border rounded p-4">
+                    <h3>{{j.title}}</h3>
+                    <p class="company font-weight-bold text-primary">{{j.recruiter.company}}</p>
+                    <p>📍 {{j.location}} | 💼 {{j.experience}}</p>
+                    <a href="{% url 'job_detail' j.id %}" class="apply-btn btn btn-primary mt-3">View Detail</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted lead">No job openings at the moment. Please check back later.</p>
+                <a href="{% url 'latest_jobs' %}" class="btn btn-outline-primary mt-3">View All Jobs</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Companies Section -->
+<section class="companies-section py-5" id="companies">
+    <div class="container">
+
+        <!-- Section Heading -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="fw-bold">Trusted by Top Companies</h2>
+                <p class="mt-3 text-muted">
+                    HireUp connects job seekers with leading companies across industries.
+                </p>
+            </div>
+        </div>
+
+        <!-- Company Cards -->
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-4 col-6 d-flex">
+                <div class="company-card w-100">
+                    <img src="{% static 'images/company/Amazon-logo.png' %}" alt="Company">
+                    <h6>Amazon</h6>
+                    <p>IT Services</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 d-flex">
+                <div class="company-card w-100">
+                    <img src="{% static 'images/company/Hp-logo.png' %}" alt="Company">
+                    <h6>HP</h6>
+                    <p>Hardware</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 d-flex">
+                <div class="company-card w-100">
+                    <img src="{% static 'images/company/Microsoft-logo.png' %}" alt="Company">
+                    <h6>Microsoft</h6>
+                    <p>Software</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 d-flex">
+                <div class="company-card w-100">
+                    <img src="{% static 'images/company/Tech-logo.png' %}" alt="Company">
+                    <h6>Tech Essential</h6>
+                    <p>IT Services</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

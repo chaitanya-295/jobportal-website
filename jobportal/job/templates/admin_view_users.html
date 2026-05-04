@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Platform Students{% endblock %}
+
+{% block content %}
+
+<section style="padding-top: 100px; background-color: #f8f9fa; min-height: 100vh;">
+    <div class="container py-4">
+        <h2 class="text-center font-weight-bold mb-5 text-primary d-flex align-items-center justify-content-center">
+             <i class="fa fa-users me-3 bg-white p-3 rounded-circle shadow-sm"></i> Student Inventory
+        </h2>
+        
+        <div class="row">
+            <div class="col-md-11 mx-auto">
+                <table class="table align-middle" id="userTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Identity</th>
+                            <th>Communication</th>
+                            <th>Details</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in users %}
+                        <tr>
+                            <td class="font-weight-bold text-muted">{{forloop.counter}}</td>
+                            <td>
+                                <h6 class="font-weight-bold text-primary mb-1">{{u.user.first_name}} {{u.user.last_name}}</h6>
+                                <span class="badge bg-light text-dark small text-capitalize rounded-pill">{{u.gender}}</span>
+                            </td>
+                            <td class="small">
+                                <div class="text-dark font-weight-bold">{{u.user.email}}</div>
+                                <div class="text-muted"><i class="fa fa-phone small me-1"></i> {{u.mobile}}</div>
+                            </td>
+                            <td class="text-center">
+                                {% if u.image %}
+                                    <img src="{{u.image.url}}" class="rounded-circle shadow-sm border p-1" style="height: 50px; width: 50px; object-fit: cover;">
+                                {% else %}
+                                    <div class="bg-light text-muted rounded-circle d-inline-flex align-items-center justify-content-center" style="height: 50px; width: 50px; font-size: 0.7em;">N/A</div>
+                                {% endif %}
+                            </td>
+                            <td><span class="badge bg-success shadow-sm px-3 rounded-pill">Active</span></td>
+                            <td>
+                                <a href="{% url 'delete_user' u.id %}" class="btn btn-outline-danger btn-sm rounded-pill px-4 shadow-sm" onclick="return confirm('Confirm user account deletion?')">
+                                    <i class="fa fa-trash-alt me-2"></i> Terminate
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Safe initialization to prevent "Cannot reinitialise DataTable" error
+        $('#userTable').DataTable({
+            "destroy": true, // Allow re-initialization if already exists
+            "pageLength": 10,
+            "ordering": true,
+            "info": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+                "search": "SEARCH STUDENTS:",
+                "searchPlaceholder": "Name or email..."
+            }
+        });
+    });
+</script>
+{% endblock %}

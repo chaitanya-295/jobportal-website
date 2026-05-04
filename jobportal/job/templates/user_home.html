@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Talent Dashboard{% endblock %}
+
+{% block content %}
+<section style="padding-top: 80px;">
+    <div class="container py-3">
+        <div class="row align-items-center mb-5 border-bottom pb-4">
+            <div class="col-md-9">
+                <h1 class="display-5 font-weight-bold text-dark">Welcome back, {{request.user.first_name}}!</h1>
+                <p class="lead text-muted">A world of opportunities is waiting for you today.</p>
+            </div>
+            <div class="col-md-3 text-md-end d-none d-md-block">
+                 {% if student.image %}
+                    <img src="{{student.image.url}}" class="rounded-circle shadow border p-1 bg-white" style="height: 100px; width: 100px; object-fit: cover;">
+                {% else %}
+                    <div class="bg-primary text-white rounded-circle shadow d-inline-flex align-items-center justify-content-center" style="height: 100px; width: 100px; font-size: 2.5rem;">
+                        {{request.user.first_name|first}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- STATS 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-lg p-4 bg-gradient-primary text-white rounded-xl h-100 position-relative overflow-hidden hover-elevate transition">
+                    <div class="position-relative z-index-1">
+                        <h2 class="font-weight-bold mb-0 display-4">∞</h2>
+                        <p class="mb-0 opacity-75">Open Roles for You</p>
+                        <a href="{% url 'user_latestjobs' %}" class="btn btn-light btn-sm rounded-pill px-4 mt-3 font-weight-bold shadow-sm">Explore All &rarr;</a>
+                    </div>
+                    <i class="fa fa-briefcase fa-4x position-absolute opacity-10" style="right: -10px; bottom: -10px;"></i>
+                </div>
+            </div>
+
+            <!-- STATS 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-lg p-4 bg-gradient-info text-white rounded-xl h-100 position-relative overflow-hidden hover-elevate transition">
+                    <div class="position-relative z-index-1">
+                        <h2 class="font-weight-bold mb-0 display-4">{{app_count}}</h2>
+                        <p class="mb-0 opacity-75">Active Applications</p>
+                        <a href="{% url 'applied_jobs' %}" class="btn btn-light btn-sm rounded-pill px-4 mt-3 font-weight-bold shadow-sm">Track Progress &rarr;</a>
+                    </div>
+                    <i class="fa fa-paper-plane fa-4x position-absolute opacity-10" style="right: -10px; bottom: -10px;"></i>
+                </div>
+            </div>
+
+            <!-- PROFILE STATUS -->
+            <div class="col-md-12 col-lg-4">
+                <div class="card border-0 shadow-lg p-4 bg-white text-dark rounded-xl h-100 border-left-warning hover-elevate transition">
+                    <div class="d-flex flex-column justify-content-between h-100">
+                        <div>
+                            <h5 class="font-weight-bold mb-2">Talent Identity</h5>
+                            <p class="small text-muted mb-4 text-truncate">User: {{request.user.username}}</p>
+                        </div>
+                        <div class="d-grid gap-2">
+                             <a href="{% url 'user_profile' %}" class="btn btn-outline-warning text-dark border-2 rounded-pill font-weight-bold shadow-sm">
+                                <i class="fa fa-user-edit mr-2"></i> Refine Profile
+                             </a>
+                             <a href="{% url 'Logout' %}" class="btn btn-link py-1 text-muted small">Secure Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOTIVATION -->
+        <div class="mt-5 p-5 bg-dark text-white rounded-xl shadow-lg position-relative overflow-hidden">
+             <div class="row align-items-center position-relative z-index-1">
+                <div class="col-md-8">
+                     <h3 class="font-weight-bold mb-2">Career Catalyst Tip</h3>
+                     <p class="lead opacity-75 mb-0">"Did you know? Tailoring your resume to match the job's key skills increases your visibility by 40%."</p>
+                </div>
+                <div class="col-md-4 text-end d-none d-md-block">
+                    <i class="fa fa-lightbulb fa-5x text-warning opacity-25"></i>
+                </div>
+             </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .rounded-xl { border-radius: 1.5rem !important; }
+    .bg-gradient-primary { background: linear-gradient(135deg, #4e73df, #224abe); }
+    .bg-gradient-info { background: linear-gradient(135deg, #36b9cc, #258391); }
+    .border-left-warning { border-left: 8px solid #f6c23e !important; }
+    .transition { transition: all 0.3s cubic-bezier(.25,.8,.25,1); }
+    .hover-elevate:hover { transform: translateY(-7px); box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important; }
+    .z-index-1 { z-index: 1; }
+</style>
+
+{% endblock %}
