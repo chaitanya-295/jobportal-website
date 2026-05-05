@@ -85,6 +85,9 @@ if MONGODB_URI:
     post_migrate.disconnect(create_permissions, dispatch_uid="django.contrib.auth.management.create_permissions")
 
     # Patch built-in apps to use ObjectIdAutoField
+    from django.contrib.admin.apps import AdminConfig
+    from django.contrib.auth.apps import AuthConfig
+    from django.contrib.contenttypes.apps import ContentTypesConfig
     AdminConfig.default_auto_field = DEFAULT_AUTO_FIELD
     AuthConfig.default_auto_field = DEFAULT_AUTO_FIELD
     ContentTypesConfig.default_auto_field = DEFAULT_AUTO_FIELD
