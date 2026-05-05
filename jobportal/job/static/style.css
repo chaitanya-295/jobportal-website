@@ -940,76 +940,70 @@ h6 {
 }
 
 /* =========================================
-   ADVANCED RESPONSIVE ENGINE (FIX)
+   NUCLEAR RESPONSIVE TABLE FIX
    ========================================= */
 
-/* Fix DataTables Controls Stacking */
-.dataTables_wrapper .row {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    gap: 15px !important;
-}
+/* Force all DataTables elements to stack vertically on small screens */
+@media (max-width: 768px) {
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_paginate {
+        width: 100% !important;
+        text-align: center !important;
+        float: none !important;
+        margin: 10px 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
 
-@media (min-width: 768px) {
-    .dataTables_wrapper .row {
-        flex-direction: row !important;
-        justify-content: space-between !important;
+    .dataTables_filter label {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    .dataTables_filter input {
+        width: 100% !important;
+        margin: 5px 0 0 0 !important;
+        display: block !important;
+        border-radius: 20px !important;
+        padding: 10px !important;
+    }
+
+    /* Fix the Blue Header specifically */
+    table.dataTable thead th {
+        font-size: 11px !important;
+        padding: 10px 5px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0 !important;
+    }
+
+    /* Force horizontal scroll on the table container */
+    .table-responsive {
+        border: none !important;
+        margin-bottom: 20px !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* Pagination button cleanup */
+    .dataTables_paginate .paginate_button {
+        padding: 5px 10px !important;
+        margin: 2px !important;
+        font-size: 12px !important;
     }
 }
 
-/* Make Search Bar Full Width on Mobile */
-.dataTables_filter {
-    width: 100% !important;
-    text-align: center !important;
-    margin-top: 10px !important;
-}
-
-.dataTables_filter input {
-    width: 100% !important;
-    margin-left: 0 !important;
-    max-width: none !important;
-}
-
-/* Fix Table Headers on Small Screens */
-table.dataTable thead th {
-    white-space: nowrap !important;
-    padding: 12px 8px !important;
-    font-size: 0.75rem !important;
-}
-
-/* Centering Table Info and Pagination */
-.dataTables_info, .dataTables_paginate {
-    width: 100% !important;
-    text-align: center !important;
-    justify-content: center !important;
-    display: flex !important;
-    margin-top: 15px !important;
-}
-
-/* Professional Card Spacing */
-.card, .login-card, .register-card {
-    margin-left: auto !important;
-    margin-right: auto !important;
+/* Global Polish for Tables */
+.table thead th {
+    background-color: #4f46e5 !important;
+    color: #ffffff !important;
     border: none !important;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.06) !important;
 }
 
-/* Prevent Button Overflow */
-.btn {
-    white-space: normal !important;
-    word-wrap: break-word !important;
-}
-
-@media (max-width: 576px) {
-    section {
-        padding-top: 100px !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-    }
-    .display-4 {
-        font-size: 2.2rem !important;
-    }
+.table tbody td {
+    vertical-align: middle !important;
+    font-size: 14px !important;
 }
 
