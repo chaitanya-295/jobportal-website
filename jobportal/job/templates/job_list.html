@@ -7,19 +7,20 @@
 
 <section style="padding-top: 100px; background-color: #f8f9fa; min-height: 100vh;">
     <div class="container py-4">
-        <div class="d-flex justify-content-between align-items-center mb-5 border-bottom pb-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 border-bottom pb-4 gap-3">
             <h2 class="font-weight-bold text-dark mb-0 d-flex align-items-center">
                  <i class="fa fa-clipboard-list text-primary me-3 bg-white p-3 rounded-circle shadow-sm"></i> 
                  Your Published Jobs
             </h2>
-            <a href="{% url 'add_job' %}" class="btn btn-primary rounded-pill px-4 shadow-sm font-weight-bold py-2">
+            <a href="{% url 'add_job' %}" class="btn btn-primary rounded-pill px-4 shadow-sm font-weight-bold py-2 align-self-start align-self-md-center">
                 <i class="fa fa-plus-circle mr-2"></i> Post New Vacancy
             </a>
         </div>
         
         <div class="row">
             <div class="col-md-12">
-                <table class="table align-middle" id="jobTable">
+                <div class="table-responsive">
+                    <table class="table align-middle" id="jobTable">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -58,13 +59,10 @@
                                 </div>
                             </td>
                         </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="6" class="py-5 text-center lead border p-4 bg-white opacity-50 shadow-sm rounded">No job postings available.</td>
-                        </tr>
                         {% endfor %}
                     </tbody>
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

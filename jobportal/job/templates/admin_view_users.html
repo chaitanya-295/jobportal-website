@@ -7,13 +7,16 @@
 
 <section style="padding-top: 100px; background-color: #f8f9fa; min-height: 100vh;">
     <div class="container py-4">
-        <h2 class="text-center font-weight-bold mb-5 text-primary d-flex align-items-center justify-content-center">
-             <i class="fa fa-users me-3 bg-white p-3 rounded-circle shadow-sm"></i> Student Inventory
-        </h2>
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 border-bottom pb-4 gap-3">
+            <h2 class="font-weight-bold text-dark mb-0 d-flex align-items-center">
+                 <i class="fa fa-users me-3 bg-white p-3 rounded-circle shadow-sm"></i> Student Inventory
+            </h2>
+        </div>
         
         <div class="row">
             <div class="col-md-11 mx-auto">
-                <table class="table align-middle" id="userTable">
+                <div class="table-responsive">
+                    <table class="table align-middle" id="userTable">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -52,7 +55,8 @@
                         </tr>
                         {% endfor %}
                     </tbody>
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
