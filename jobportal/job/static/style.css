@@ -938,3 +938,69 @@ h6 {
 .dt-button:hover {
   background: #4338ca !important;
 }
+
+/* =========================================
+   PROFESSIONAL RESPONSIVENESS & POLISH
+   ========================================= */
+
+/* Global Typography Scaling */
+@media (max-width: 768px) {
+    h1 { font-size: 2.2rem !important; }
+    h2 { font-size: 1.8rem !important; }
+    h3 { font-size: 1.5rem !important; }
+    .hero-content p { font-size: 1.1rem !important; }
+}
+
+/* Card Improvements */
+.highlight-card, .job-card, .company-card, .tech-stack-box {
+    border: 1px solid rgba(0,0,0,0.05) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* Form Container Polish */
+.login-card, .register-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08) !important;
+    padding: 2.5rem !important;
+    max-width: 500px !important;
+    width: 90% !important;
+    margin: 2rem auto !important;
+    border: 1px solid #f1f3f9 !important;
+}
+
+@media (max-width: 576px) {
+    .login-card, .register-card {
+        padding: 1.5rem !important;
+        margin: 1rem auto !important;
+        border-radius: 15px !important;
+    }
+}
+
+/* Navbar Smooth Mobile */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        border: 1px solid #eee;
+    }
+    .navbar-nav .nav-link {
+        border-bottom: 1px solid #f8f9fa;
+        padding: 12px 20px !important;
+    }
+}
+
+/* Table Scrolling Helper */
+.table-responsive {
+    border-radius: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Button Touch Targets */
+.btn {
+    padding: 10px 24px;
+    font-weight: 600;
+}
+
+@media (max-width: 480px) {
+    .btn { width: 100% !important; margin-bottom: 10px !important; }
+}
