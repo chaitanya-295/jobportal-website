@@ -940,67 +940,76 @@ h6 {
 }
 
 /* =========================================
-   PROFESSIONAL RESPONSIVENESS & POLISH
+   ADVANCED RESPONSIVE ENGINE (FIX)
    ========================================= */
 
-/* Global Typography Scaling */
-@media (max-width: 768px) {
-    h1 { font-size: 2.2rem !important; }
-    h2 { font-size: 1.8rem !important; }
-    h3 { font-size: 1.5rem !important; }
-    .hero-content p { font-size: 1.1rem !important; }
+/* Fix DataTables Controls Stacking */
+.dataTables_wrapper .row {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 15px !important;
 }
 
-/* Card Improvements */
-.highlight-card, .job-card, .company-card, .tech-stack-box {
-    border: 1px solid rgba(0,0,0,0.05) !important;
-    backdrop-filter: blur(10px);
+@media (min-width: 768px) {
+    .dataTables_wrapper .row {
+        flex-direction: row !important;
+        justify-content: space-between !important;
+    }
 }
 
-/* Form Container Polish */
-.login-card, .register-card {
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.08) !important;
-    padding: 2.5rem !important;
-    max-width: 500px !important;
-    width: 90% !important;
-    margin: 2rem auto !important;
-    border: 1px solid #f1f3f9 !important;
+/* Make Search Bar Full Width on Mobile */
+.dataTables_filter {
+    width: 100% !important;
+    text-align: center !important;
+    margin-top: 10px !important;
+}
+
+.dataTables_filter input {
+    width: 100% !important;
+    margin-left: 0 !important;
+    max-width: none !important;
+}
+
+/* Fix Table Headers on Small Screens */
+table.dataTable thead th {
+    white-space: nowrap !important;
+    padding: 12px 8px !important;
+    font-size: 0.75rem !important;
+}
+
+/* Centering Table Info and Pagination */
+.dataTables_info, .dataTables_paginate {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    display: flex !important;
+    margin-top: 15px !important;
+}
+
+/* Professional Card Spacing */
+.card, .login-card, .register-card {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    border: none !important;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.06) !important;
+}
+
+/* Prevent Button Overflow */
+.btn {
+    white-space: normal !important;
+    word-wrap: break-word !important;
 }
 
 @media (max-width: 576px) {
-    .login-card, .register-card {
-        padding: 1.5rem !important;
-        margin: 1rem auto !important;
-        border-radius: 15px !important;
+    section {
+        padding-top: 100px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    .display-4 {
+        font-size: 2.2rem !important;
     }
 }
 
-/* Navbar Smooth Mobile */
-@media (max-width: 991px) {
-    .navbar-collapse {
-        border: 1px solid #eee;
-    }
-    .navbar-nav .nav-link {
-        border-bottom: 1px solid #f8f9fa;
-        padding: 12px 20px !important;
-    }
-}
-
-/* Table Scrolling Helper */
-.table-responsive {
-    border-radius: 12px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* Button Touch Targets */
-.btn {
-    padding: 10px 24px;
-    font-weight: 600;
-}
-
-@media (max-width: 480px) {
-    .btn { width: 100% !important; margin-bottom: 10px !important; }
-}
