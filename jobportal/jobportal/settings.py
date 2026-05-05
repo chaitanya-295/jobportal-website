@@ -58,30 +58,6 @@ if MONGODB_URI:
     
     # MongoDB specialized field
     DEFAULT_AUTO_FIELD = 'django_mongodb_backend.fields.ObjectIdAutoField'
-    
-    # PATCH: Fix "unhashable" error in Django 6.0 + MongoDB
-    import django.db.models.base
-    _old_hash = django.db.models.base.Model.__hash__
-    def _new_hash(self):
-        if self.pk is None:
-            return id(self)
-        return _old_hash(self)
-    django.db.models.base.Model.__hash__ = _new_hash
-    
-    # PATCH: Fix "Model instances must be saved" error during migration
-    # This happens because Django 6.0 is strict about related filters needing saved instances,
-    # and MongoDB backend might not populate PK immediately in signals.
-    import django.db.models.fields.related_lookups as related_lookups
-    _old_get_normalized_value = related_lookups.get_normalized_value
-    def _new_get_normalized_value(value, lhs):
-        from django.db.models import Model
-        if isinstance(value, Model) and getattr(value, 'pk', None) is None:
-            return (value, None)
-        return _old_get_normalized_value(value, lhs)
-    related_lookups.get_normalized_value = _new_get_normalized_value
-    # PATCH: Forcefully disable create_permissions during migration
-    import django.contrib.auth.management
-    django.contrib.auth.management.create_permissions = lambda *args, **kwargs: None
 
     # Patch built-in apps to use ObjectIdAutoField
     from django.contrib.admin.apps import AdminConfig
