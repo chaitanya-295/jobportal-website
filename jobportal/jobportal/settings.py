@@ -79,10 +79,9 @@ if MONGODB_URI:
             return (value, None)
         return _old_get_normalized_value(value, lhs)
     related_lookups.get_normalized_value = _new_get_normalized_value
-
-    from django.db.models.signals import post_migrate
-    from django.contrib.auth.management import create_permissions
-    post_migrate.disconnect(create_permissions, dispatch_uid="django.contrib.auth.management.create_permissions")
+    # PATCH: Forcefully disable create_permissions during migration
+    import django.contrib.auth.management
+    django.contrib.auth.management.create_permissions = lambda *args, **kwargs: None
 
     # Patch built-in apps to use ObjectIdAutoField
     from django.contrib.admin.apps import AdminConfig
