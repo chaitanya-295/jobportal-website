@@ -69,17 +69,28 @@ if MONGODB_URI:
     django.db.models.base.Model.__hash__ = _new_hash
     
     # PATCH: Fix "Model instances must be saved" error during migration
+    # This happens because Django 6.0 is strict about related filters needing saved instances,
+    # and MongoDB backend might not populate PK immediately in signals.
+    import django.db.models.fields.related_lookups as related_lookups
+    _old_get_normalized_value = related_lookups.get_normalized_value
+    def _new_get_normalized_value(value, lhs):
+        from django.db.models import Model
+        if isinstance(value, Model) and getattr(value, 'pk', None) is None:
+            return (value, None)
+        return _old_get_normalized_value(value, lhs)
+    related_lookups.get_normalized_value = _new_get_normalized_value
+
     from django.db.models.signals import post_migrate
     from django.contrib.auth.management import create_permissions
     post_migrate.disconnect(create_permissions, dispatch_uid="django.contrib.auth.management.create_permissions")
 
-    # Patch built-in apps to use ObjectIdAutoField
-    from django.contrib.admin.apps import AdminConfig
-    from django.contrib.auth.apps import AuthConfig
-    from django.contrib.contenttypes.apps import ContentTypesConfig
-    AdminConfig.default_auto_field = DEFAULT_AUTO_FIELD
-    AuthConfig.default_auto_field = DEFAULT_AUTO_FIELD
-    ContentTypesConfig.default_auto_field = DEFAULT_AUTO_FIELD
+    # Do NOT patch built-in apps' default_auto_field.
+    # Built-in apps (admin, auth, contenttypes) have their own migrations
+    # which expect specific primary key types. Changing them causes
+    # migration sync issues and can lead to ValueErrors during migrate.
+    # AdminConfig.default_auto_field = DEFAULT_AUTO_FIELD
+    # AuthConfig.default_auto_field = DEFAULT_AUTO_FIELD
+    # ContentTypesConfig.default_auto_field = DEFAULT_AUTO_FIELD
 else:
     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
