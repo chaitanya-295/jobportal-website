@@ -84,13 +84,10 @@ if MONGODB_URI:
     from django.contrib.auth.management import create_permissions
     post_migrate.disconnect(create_permissions, dispatch_uid="django.contrib.auth.management.create_permissions")
 
-    # Do NOT patch built-in apps' default_auto_field.
-    # Built-in apps (admin, auth, contenttypes) have their own migrations
-    # which expect specific primary key types. Changing them causes
-    # migration sync issues and can lead to ValueErrors during migrate.
-    # AdminConfig.default_auto_field = DEFAULT_AUTO_FIELD
-    # AuthConfig.default_auto_field = DEFAULT_AUTO_FIELD
-    # ContentTypesConfig.default_auto_field = DEFAULT_AUTO_FIELD
+    # Patch built-in apps to use ObjectIdAutoField
+    AdminConfig.default_auto_field = DEFAULT_AUTO_FIELD
+    AuthConfig.default_auto_field = DEFAULT_AUTO_FIELD
+    ContentTypesConfig.default_auto_field = DEFAULT_AUTO_FIELD
 else:
     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
