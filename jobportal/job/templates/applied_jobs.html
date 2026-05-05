@@ -56,16 +56,6 @@
                                 </div>
                             </td>
                         </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5" class="py-5 text-center">
-                                <div class="text-muted">
-                                    <i class="fa fa-search fa-4x mb-4 opacity-25"></i>
-                                    <p class="lead font-weight-bold">Zero records found</p>
-                                    <a href="{% url 'user_latestjobs' %}" class="btn btn-primary rounded-pill px-4 shadow mt-2">Discover Jobs &rarr;</a>
-                                </div>
-                            </td>
-                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>
