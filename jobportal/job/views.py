@@ -426,12 +426,23 @@ def user_register(request):
 from django.shortcuts import render, redirect, get_object_or_404
 
 def view_users(request):
-    if not request.user.is_staff:
-        return redirect('admin_login')
+    try:
+        if not request.user.is_staff:
+            return redirect('admin_login')
 
-    users = UserProfile.objects.filter(type="student")
+        print("DEBUG: Fetching student profiles from MongoDB...")
+        users = UserProfile.objects.filter(type="student")
+        
+        # Force evaluation to catch database errors here in the view
+        user_list = list(users)
+        print(f"DEBUG: Successfully found {len(user_list)} student(s)")
 
-    return render(request, "admin_view_users.html", {"users": users})
+        return render(request, "admin_view_users.html", {"users": user_list})
+    except Exception as e:
+        print(f"DEBUG ERROR IN view_users: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        raise e
 
 def delete_users(request, pid):
     if not request.user.is_staff:
