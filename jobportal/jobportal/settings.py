@@ -67,6 +67,11 @@ if MONGODB_URI:
             return id(self)
         return _old_hash(self)
     django.db.models.base.Model.__hash__ = _new_hash
+    
+    # PATCH: Fix "Model instances must be saved" error during migration
+    from django.db.models.signals import post_migrate
+    from django.contrib.auth.management import create_permissions
+    post_migrate.disconnect(create_permissions, dispatch_uid="django.contrib.auth.management.create_permissions")
 
     # Patch built-in apps to use ObjectIdAutoField
     from django.contrib.admin.apps import AdminConfig
